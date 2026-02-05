@@ -1,0 +1,30 @@
+import torch
+import pytest
+from src.model import MNISTLightningModel
+
+def test_model_output_shape() -> None:
+    """
+    モデルの出力が (batch, class_count) の形状であるかテスト。
+    """
+    batch_size = 8
+    hidden_size = 32
+    model = MNISTLightningModel(hidden_size=hidden_size)
+    
+    # ダミー入力 (Batch, Channel, Width, Height)
+    x = torch.randn(batch_size, 1, 28, 28)
+    output = model(x)
+    
+    assert output.shape == (batch_size, 10)
+
+def test_training_step() -> None:
+    """
+    training_step が正常に Loss を返すかテスト。
+    """
+    model = MNISTLightningModel()
+    x = torch.randn(2, 1, 28, 28)
+    y = torch.tensor([0, 1])
+    
+    loss = model.training_step((x, y), 0)
+    
+    assert isinstance(loss, torch.Tensor)
+    assert not torch.isnan(loss)
