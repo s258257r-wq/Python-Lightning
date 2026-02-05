@@ -1,0 +1,7 @@
+# プロジェクト作成
+uv init lightning-mnist-modern
+cd lightning-mnist-modern
+
+# 依存関係の追加 (最新の安定版をインストール)
+uv add torch torchvision pytorch-lightning torchmetrics
+uv add --dev pytest mypy
